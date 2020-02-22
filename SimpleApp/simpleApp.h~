@@ -1,0 +1,50 @@
+#ifndef _SIMPLE_APP
+#define _SIMPLE_APP
+
+#include <iostream>
+#include <iomanip>
+#include <GL/gl.h>
+#include <vrj/vrjConfig.h>
+#include <vrj/Draw/OGL/GlApp.h>
+#include <gadget/Type/PositionInterface.h>
+#include <gadget/Type/DigitalInterface.h>
+#include <gadget/Type/AnalogInterface.h>
+#include "Dynamo.h"
+
+using namespace vrj;
+
+class simpleApp : public GlApp{
+public:
+//Constructor
+   simpleApp(){
+	DY = new Dynamo();
+   }
+
+   virtual ~simpleApp (void) {;}
+
+  //necessary to initialize vr juggler functions
+   virtual void init(){
+      joyY.init("VJJoyY");
+   }
+   
+   virtual void apiInit () {;}
+   virtual void bufferPreDraw();
+   virtual void preFrame() {;}
+   virtual void intraFrame() {;}
+   virtual void postFrame() {;}
+
+//OpenGL FUNCTIONS
+   virtual void contextInit(){
+      DY->Init();
+   }
+
+   virtual void draw();
+
+//variables
+public:
+   gadget::AnalogInterface    joyY;
+   double data;
+   Dynamo *DY;
+};
+
+#endif
